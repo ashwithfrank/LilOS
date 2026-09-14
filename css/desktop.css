@@ -1,0 +1,286 @@
+/* ==========================================================================
+   LilOS — desktop.css
+   ========================================================================== */
+
+#desktop{
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.wallpaper{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  transition: background var(--dur-slow) var(--ease-out);
+}
+
+/* ---------- desktop icons ---------- */
+#desktop-icons{
+  position: absolute;
+  inset: 18px 18px auto 18px;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 88px);
+  grid-auto-rows: 92px;
+  gap: 4px;
+  justify-content: start;
+}
+#desktop-icons.hidden{ display: none; }
+
+.desktop-icon{
+  width: 88px; height: 92px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px;
+  padding: 8px 4px 6px;
+  border-radius: var(--radius-md);
+  cursor: default;
+  border: 1px solid transparent;
+}
+.desktop-icon:hover{ background: rgb(255 255 255 / 0.08); }
+.desktop-icon.selected{ background: var(--accent-soft); border-color: rgb(255 255 255 / .2); }
+.desktop-icon .icon-glyph{
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 24px;
+  background: var(--surface-a2);
+  border: 1px solid var(--border-a);
+}
+.desktop-icon .icon-label{
+  font-size: 11.5px;
+  color: #fff;
+  text-shadow: 0 1px 3px rgb(0 0 0 / .6);
+  text-align: center;
+  line-height: 1.2;
+  max-width: 84px;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- taskbar ---------- */
+#taskbar{
+  position: fixed;
+  left: 50%;
+  bottom: 12px;
+  transform: translateX(-50%);
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 9px;
+  border-radius: 22px;
+  max-width: calc(100vw - 20px);
+  overflow-x: auto;
+  scrollbar-width: none;
+  transition: bottom var(--dur-med) var(--ease-out);
+}
+#taskbar::-webkit-scrollbar{ display: none; }
+[data-taskbar="autohide"] #taskbar{ bottom: -70px; }
+[data-taskbar="autohide"] #taskbar:hover,
+[data-taskbar="autohide"] #taskbar.peek{ bottom: 12px; }
+
+.taskbar-btn{
+  position: relative;
+  flex: 0 0 auto;
+  width: 42px; height: 42px;
+  border-radius: 14px;
+  display: grid; place-items: center;
+  font-size: 19px;
+  background: transparent;
+  border: none;
+  color: var(--text-0);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-spring);
+}
+.taskbar-btn:hover{ background: var(--surface-a2); transform: translateY(-2px); }
+.taskbar-btn.active{ background: var(--surface-a3); }
+.taskbar-btn.running::after{
+  content: "";
+  position: absolute;
+  bottom: 3px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent);
+}
+.taskbar-btn.launcher-btn{
+  background: linear-gradient(145deg, var(--accent), hsl(var(--accent-h) var(--accent-s) 58%));
+  color: #fff;
+}
+.taskbar-sep{ width: 1px; height: 26px; background: var(--border-a); margin: 0 2px; }
+
+#taskbar-clock{
+  padding: 0 12px;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  text-align: center;
+  cursor: default;
+  border-radius: 12px;
+  min-width: 58px;
+}
+#taskbar-clock .tb-date{ font-size: 10px; color: var(--text-2); }
+
+/* ---------- launcher ---------- */
+#launcher{
+  position: fixed;
+  left: 50%; bottom: 78px;
+  transform: translateX(-50%) scale(.96);
+  width: min(560px, 92vw);
+  max-height: 68vh;
+  z-index: 410;
+  border-radius: var(--radius-xl);
+  padding: 18px;
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-spring);
+}
+#launcher.open{ display: flex; opacity: 1; transform: translateX(-50%) scale(1); }
+
+#launcher-search{
+  font-size: 15px;
+  padding: 11px 14px;
+}
+
+.launcher-section-label{
+  font-size: 11px;
+  color: var(--text-2);
+  padding: 0 2px;
+}
+
+#launcher-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 78px);
+  gap: 6px;
+  justify-content: space-between;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 2px;
+}
+.launcher-app{
+  width: 78px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 8px 4px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--text-0);
+}
+.launcher-app:hover{ background: var(--surface-a2); }
+.launcher-app .icon-glyph{
+  width: 44px; height: 44px; border-radius: 12px;
+  display: grid; place-items: center; font-size: 22px;
+  background: var(--surface-a2); border: 1px solid var(--border-a);
+}
+.launcher-app span{ font-size: 11px; text-align: center; }
+
+.launcher-recent{
+  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px;
+}
+.launcher-recent .launcher-app{ flex: 0 0 auto; }
+
+.launcher-power-row{
+  display: flex; gap: 8px; border-top: 1px solid var(--border-a); padding-top: 12px;
+}
+.launcher-power-row .btn{ flex: 1; font-size: 12.5px; }
+
+/* ---------- notifications ---------- */
+#toast-stack{
+  position: fixed;
+  top: 16px; right: 16px;
+  z-index: 600;
+  display: flex; flex-direction: column; gap: 8px;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+}
+.toast{
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  display: flex; gap: 10px; align-items: flex-start;
+  animation: slide-in-toast 260ms var(--ease-spring);
+}
+.toast.leaving{ animation: fade-out 180ms var(--ease-out) forwards; }
+.toast .toast-icon{ font-size: 17px; margin-top: 1px; }
+.toast .toast-body{ flex: 1; min-width: 0; }
+.toast .toast-title{ font-size: 13px; font-weight: 600; }
+.toast .toast-msg{ font-size: 12px; color: var(--text-1); margin-top: 2px; }
+.toast .toast-close{ background: none; border: none; color: var(--text-2); cursor: pointer; font-size: 14px; }
+@keyframes slide-in-toast{
+  from{ opacity: 0; transform: translateX(24px); }
+  to{ opacity: 1; transform: translateX(0); }
+}
+
+#notif-panel{
+  position: fixed;
+  top: 12px; right: 12px;
+  z-index: 410;
+  width: 320px;
+  max-height: 70vh;
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(-8px) scale(.98);
+  transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-spring);
+}
+#notif-panel.open{ display: flex; opacity: 1; transform: translateY(0) scale(1); }
+#notif-panel .panel-head{ display: flex; justify-content: space-between; align-items: center; }
+#notif-panel .panel-head h3{ font-size: 14px; }
+#notif-list{ display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+.notif-item{ padding: 10px; border-radius: var(--radius-sm); background: var(--surface-a1); }
+.notif-item .n-title{ font-size: 12.5px; font-weight: 600; }
+.notif-item .n-msg{ font-size: 11.5px; color: var(--text-1); margin-top: 2px; }
+.notif-item .n-time{ font-size: 10px; color: var(--text-2); margin-top: 4px; }
+.notif-empty{ font-size: 12.5px; color: var(--text-2); text-align: center; padding: 24px 0; }
+
+/* ---------- context menu ---------- */
+.context-menu{
+  position: fixed;
+  z-index: 700;
+  min-width: 190px;
+  border-radius: var(--radius-md);
+  padding: 6px;
+  display: flex; flex-direction: column;
+  animation: pop-in 120ms var(--ease-out);
+}
+.context-menu button{
+  text-align: left;
+  background: none; border: none;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  color: var(--text-0);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.context-menu button:hover{ background: var(--surface-a2); }
+.context-menu button:disabled{ color: var(--text-2); cursor: default; }
+.context-menu button:disabled:hover{ background: none; }
+.context-menu hr{ border: none; border-top: 1px solid var(--border-a); margin: 4px 2px; }
+
+/* ---------- dialogs ---------- */
+.dialog-overlay{
+  position: fixed; inset: 0; z-index: 800;
+  background: rgb(0 0 0 / .35);
+  display: flex; align-items: center; justify-content: center;
+  animation: fade-in 140ms var(--ease-out);
+}
+.dialog-box{
+  width: min(380px, 90vw);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  animation: pop-in 180ms var(--ease-spring);
+}
+.dialog-box h3{ font-size: 15px; margin-bottom: 8px; }
+.dialog-box p{ font-size: 13px; color: var(--text-1); line-height: 1.5; }
+.dialog-box .dialog-actions{ display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+
+@media (max-width: 560px){
+  #notif-panel, #toast-stack{ width: calc(100vw - 24px); right: 12px; }
+  #launcher{ width: calc(100vw - 24px); }
+}

@@ -1,0 +1,27 @@
+/* ==========================================================================
+   LilOS — themes.css
+   Wallpaper presets (id matches data-wallpaper attribute set by settings.js)
+   ========================================================================== */
+
+.wallpaper[data-wallpaper="aurora"]{
+  background-image: linear-gradient(135deg, #1e2a5e, #7b2ff7 45%, #22d1c4 100%);
+}
+.wallpaper[data-wallpaper="sunset"]{
+  background-image: linear-gradient(135deg, #2b1055, #7597de 40%, #ff9a5a 100%);
+}
+.wallpaper[data-wallpaper="forest"]{
+  background-image: linear-gradient(135deg, #062f2a, #0c5c4a 45%, #9fd66b 100%);
+}
+.wallpaper[data-wallpaper="mono"]{
+  background-image: linear-gradient(135deg, #1a1b20, #2b2d36 60%, #44475a 100%);
+}
+.wallpaper[data-wallpaper="peach"]{
+  background-image: linear-gradient(135deg, #4b1248, #f0669e 55%, #ffd36e 100%);
+}
+.wallpaper[data-wallpaper="ocean"]{
+  background-image: linear-gradient(135deg, #021c33, #0c5c8f 50%, #38d0d8 100%);
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}

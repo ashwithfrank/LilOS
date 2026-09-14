@@ -1,0 +1,141 @@
+/* ==========================================================================
+   LilOS — login.css
+   ========================================================================== */
+
+#login-screen{
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.login-bg{
+  position: absolute;
+  inset: -10%;
+  background: linear-gradient(120deg,
+    hsl(258 70% 18%),
+    hsl(268 65% 28%) 25%,
+    hsl(300 55% 30%) 50%,
+    hsl(20 75% 45%) 75%,
+    hsl(258 70% 18%) 100%);
+  background-size: 300% 300%;
+  animation: bg-drift 22s ease-in-out infinite;
+}
+.login-bg::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 25%, rgb(255 255 255 / 0.16), transparent 40%),
+    radial-gradient(circle at 80% 75%, rgb(0 0 0 / 0.25), transparent 55%);
+}
+@keyframes bg-drift{
+  0%{ background-position: 0% 50%; }
+  50%{ background-position: 100% 50%; }
+  100%{ background-position: 0% 50%; }
+}
+
+.login-orb{
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: .45;
+  animation: orb-float 16s ease-in-out infinite;
+}
+.login-orb.o1{ width: 380px; height: 380px; background: hsl(280 80% 55%); top: 8%; left: 8%; }
+.login-orb.o2{ width: 320px; height: 320px; background: hsl(190 80% 50%); bottom: 10%; right: 10%; animation-delay: -6s; }
+.login-orb.o3{ width: 260px; height: 260px; background: hsl(20 90% 55%); bottom: 30%; left: 30%; animation-delay: -11s; }
+@keyframes orb-float{
+  0%, 100%{ transform: translate(0,0) scale(1); }
+  50%{ transform: translate(30px,-24px) scale(1.08); }
+}
+
+.login-card{
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 56px 64px 44px;
+  border-radius: 32px;
+  animation: pop-in var(--dur-slow) var(--ease-out);
+  text-align: center;
+}
+
+.login-logo{
+  width: 92px; height: 92px;
+  border-radius: 26px;
+  display: grid; place-items: center;
+  background: linear-gradient(145deg, #fff, rgb(255 255 255 / .35));
+  box-shadow: 0 12px 30px -10px rgb(0 0 0 / .5);
+}
+.login-logo svg{ width: 52px; height: 52px; }
+
+.login-title{
+  font-size: 30px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+.login-sub{
+  font-size: 14px;
+  color: rgb(255 255 255 / .7);
+  margin-top: -12px;
+}
+
+.login-clock{
+  font-size: 15px;
+  color: rgb(255 255 255 / .85);
+  font-variant-numeric: tabular-nums;
+  margin-top: 4px;
+}
+
+.login-btn{
+  margin-top: 10px;
+  padding: 13px 40px;
+  border-radius: 999px;
+  border: 1px solid rgb(255 255 255 / .3);
+  background: rgb(255 255 255 / .18);
+  backdrop-filter: blur(14px);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast);
+  box-shadow: 0 8px 24px -8px rgb(0 0 0 / .45);
+}
+.login-btn:hover{ background: rgb(255 255 255 / .28); transform: translateY(-1px); }
+.login-btn:active{ transform: scale(.96); }
+
+.login-hint{
+  font-size: 12px;
+  color: rgb(255 255 255 / .5);
+}
+
+/* Zoom-through transition into the desktop */
+#login-screen.leaving{
+  animation: login-zoom-out 640ms var(--ease-out) forwards;
+  pointer-events: none;
+}
+@keyframes login-zoom-out{
+  0%{ opacity: 1; transform: scale(1); filter: blur(0); }
+  100%{ opacity: 0; transform: scale(1.18); filter: blur(6px); }
+}
+
+#desktop{ opacity: 0; }
+#desktop.entering{
+  animation: desktop-zoom-in 680ms var(--ease-out) forwards;
+}
+@keyframes desktop-zoom-in{
+  0%{ opacity: 0; transform: scale(1.06); }
+  100%{ opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 480px){
+  .login-card{ padding: 40px 28px 34px; }
+  .login-title{ font-size: 26px; }
+}
